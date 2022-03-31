@@ -1,0 +1,8 @@
+function isInstalled() {
+   if (typeof web3 !== 'undefined'){
+      console.log('MetaMask is installed')
+   }
+   else{
+      console.log('MetaMask is not installed')
+   }
+}

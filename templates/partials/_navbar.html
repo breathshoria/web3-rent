@@ -1,0 +1,109 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+          <a class="navbar-brand" href="index.html">
+            <img style="width: 10%;height: 10%" src="/static/img/logo1.png">
+          </a>
+          <button class="navbar-toggler flex-fill" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse flex-nowrap" id="navbarNavAltMarkup">
+            <ul class="navbar-nav">
+              <li
+                {% if '/' == request.path %}
+                  class="nav-item active mr-3"
+                {% else %}
+                  class="nav-item mr-3"
+
+                {% endif %}  
+              >
+                <a style="margin-bottom: 0px" class="nav-link" href="{% url 'index' %}">Главная</a>
+              </li>
+              <li
+                {% if 'about' in request.path %}
+                  class="nav-item active mr-3"
+                {% else %}
+                  class="nav-item mr-3"
+                {% endif %}   
+              >
+                <a class="nav-link" href="{% url 'about' %}">Гайд</a>
+              </li>
+
+
+
+
+
+
+            <li
+                {% if 'listings' in request.path %}
+                  class="nav-item active mr-3"
+                {% else %}
+                  class="nav-item mr-3"
+                {% endif %}
+              >
+                <a class="nav-link" href="{% url 'listings' %}">Объявления</a>
+              </li>
+
+            {% if user.is_authenticated and user.is_renter %}
+            <li
+                {% if 'add_listing' in request.path %}
+                  class="nav-item active mr-3"
+                {% else %}
+                  class="nav-item mr-3"
+                {% endif %}
+              >
+                <a class="nav-link" href="{% url 'add_listing' %}">Добавить объявление</a>
+              </li>
+            {% endif %}
+            </ul>
+    
+            <ul class="navbar-nav ml-auto">
+              {% if user.is_authenticated %}
+                <li 
+                  {% if 'dashboard' in request.path %}
+                    class="nav-item active mr-3"
+                  {% else %}
+                    class="nav-item mr-3"
+                  {% endif %} 
+                >
+                  <a class="nav-link" href="{% url 'dashboard' %}">
+                     {{ user.username }}</a>
+                </li>
+                <li class="nav-item mr-3">
+                  <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
+                     Выйти
+                  </a>
+                  <form action="{% url 'logout' %}" method="POST" id="logout">
+                    {% csrf_token %}
+                    <input type="hidden">
+                  </form>
+                </li>
+              {% else %}
+                   <li
+                {% if 'login' in request.path %}
+                  class="nav-item active mr-3"
+                {% else %}
+                  class="nav-item mr-3"
+                {% endif %}
+                >
+                  <a class="nav-link" href="{% url 'login' %}">
+
+
+                    Войти</a>
+                </li>
+                <li 
+                {% if 'register' in request.path %}
+                  class="nav-item active mr-3"
+                {% else %}
+                  class="nav-item mr-3"
+                {% endif %} 
+                >
+                  <a class="nav-link" href="{% url 'register' %}">
+                    Зарегистрироваться</a>
+                </li>
+
+              {% endif %}  
+            </ul>
+          </div>
+        </div>
+      </nav>
